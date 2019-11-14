@@ -1,19 +1,11 @@
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 =======
-data/
+data/*
 
-corpwatch_api_tables_csv.tar.zip
-
-=======
->>>>>>> 981cc4ff4c889b4583a9b8dfc6f7905bc4e9cd54
-=======
->>>>>>> 981cc4ff4c889b4583a9b8dfc6f7905bc4e9cd54
 # History files
 .Rhistory
 .Rapp.history
@@ -50,10 +42,4 @@ vignettes/*.pdf
 
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 981cc4ff4c889b4583a9b8dfc6f7905bc4e9cd54
-=======
->>>>>>> 981cc4ff4c889b4583a9b8dfc6f7905bc4e9cd54
-=======
 >>>>>>> 981cc4ff4c889b4583a9b8dfc6f7905bc4e9cd54

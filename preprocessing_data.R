@@ -1,4 +1,6 @@
 library(tidyverse)
+library(robotstxt)
+library(xml2)
 
 cik_name_lookup<-read_tsv("data/cik_name_lookup.txt")
 companies<-read_tsv("data/companies.txt")
@@ -24,8 +26,35 @@ looking<-filings %>%
   filter(company_name=="STARBUCKS CORP",type=='10-Q') %>% 
   arrange(year,quarter)
 
-companies_filings_stabucks<-companies_filings %>% 
-  filter(cik==829224)
+companies_filings_restaurant<-companies_filings %>% 
+  filter(cik==829224|cik==1357204 ) %>% 
+  arrange(cik)
+ 
+filename=c()
+for(item in companies_filings_restaurant$form_10k_url){
+  f<-read_delim(item,delim = "\\s",col_names = "Data")
+  f<-f %>% 
+  filter(grepl("<FILENAME>",Data)) %>% 
+  # select(Data) %>% 
+  head(1) %>%  
+  str_remove("<FILENAME>")
+  filename<-c(filename,f)
+}
 
-relationships<-relationships %>% 
-  arrange(company_name)
+companies_filings_restaurant<- companies_filings_restaurant %>% 
+  mutate(htmlfile=filename)
+
+c<-companies_filings_restaurant %>%  
+  select(form_10k_url) %>% 
+  mutate(form_10k_url=str_replace_all(form_10k_url,".txt","")) %>% 
+  mutate(form_10k_url= str_remove_all(form_10k_url,"-")) %>% 
+  mutate(form_10k_url= paste0(form_10k_url,"/",companies_filings_restaurant$htmlfile))
+
+c<-c %>% 
+  rename(reportsLink=form_10k_url)
+
+cfr<- companies_filings_restaurant
+
+cfr<-cbind(cfr,c)
+
+write_csv(cfr,"reports.csv")
